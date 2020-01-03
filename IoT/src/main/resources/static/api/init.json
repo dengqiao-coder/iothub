@@ -1,0 +1,54 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "icon": "fa fa-home",
+    "href": "/iothub/welcome"
+  },
+  "logoInfo": {
+    "title": "IoTHub",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": {
+    "iot": {
+      "title": "IoT系统",
+      "icon": "fa fa-address-book",
+      "child": [
+        {
+          "title": "终端管理",
+          "href": "",
+          "icon": "fa fa-laptop",
+          "target": "_self",
+          "child": [
+            {
+              "title": "终端开通",
+              "href": "/page/device/index",
+              "icon": "fa fa-tablet",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    "usercenter": {
+      "title": "用户中心",
+      "icon": "fa fa-address-book",
+      "child": [
+        {
+          "title": "系统管理",
+          "href": "",
+          "icon": "fa fa-laptop",
+          "target": "_self",
+          "child": [
+            {
+              "title": "用户管理",
+              "href": "/iothub/device/index",
+              "icon": "fa fa-tablet",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="layui-elem-field layuimini-search">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">产品编码</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="productName" id="productName" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">终端编码</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="deviceName" id="deviceName" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <div class="layui-btn-group">
+            <button class="layui-btn data-add-btn">添加</button>
+            <button class="layui-btn layui-btn-danger data-delete-btn">删除</button>
+        </div>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/device/list.js"></script>
+<script>
+
+
+    /*var table;
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form;
+        table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '/device/list',
+            cols: [
+                [
+                    {type: 'checkbox', width: 50, fixed: 'left'},
+                    {field: 'id', title: 'ID', hide: true},
+                    {field: 'productName', title: '产品编码'},
+                    {field: 'deviceName', title: '终端编码'},
+                    {field: 'brokerUsername', title: '帐号'},
+                    {field: 'secret', title: '密码'},
+                    {title: '操作', fixed: 'right', align: 'center',templet: function (data) {
+                        var operationStr = "<a class=\"layui-btn layui-btn-xs data-count-edit\" lay-event=\"edit\">编辑</a>" ;
+                            operationStr+="<a class=\"layui-btn layui-btn-xs layui-btn-danger data-count-delete\" lay-event=\"delete\">删除</a>";
+                            return operationStr;
+                        }
+                    }
+                ]
+            ],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var result = {"productName":$("#productName").val(),"deviceName":$("#deviceName").val()};
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: result
+            }, 'data');
+            return false;
+        });
+
+        // 监听添加操作
+        $(".data-add-btn").on("click", function () {
+            //layer.msg('添加数据');
+            var w = ($(window).width() * 0.99);
+            var h = ($(window).height() - 50);
+            layer.open({
+                type: 2,
+                area: [w + 'px', h + 'px'],
+                fix: true, //不固定
+                maxmin: true,
+                scrollbar: false,
+                title: '新增',
+                content: '/page/device/add'
+            });
+        });
+
+        // 监听删除操作
+        $(".data-delete-btn").on("click", function () {
+            var checkStatus = table.checkStatus('currentTableId')
+                , data = checkStatus.data;
+            //layer.alert(JSON.stringify(data));
+            if (data.length == 0) {
+                layer.alert("请选择要删除的记录！");
+                return false;
+            }
+            layer.confirm('确定要删除选中的' + data.length + "条记录吗？", function () {
+                var ids = "";
+                for (x in data) {
+                    ids += data[x].id + ",";
+                }
+                ids = ids.substring(0, ids.length - 1);
+                $.ajax({
+                    url: '/iothub/deleteDevice?ids=' + ids,
+                    type: 'DELETE',
+                    success: function (result) {
+                        if (result.code == 200) {
+                            layer.alert(result.msg, {
+                                icon: 1
+                            });
+                            table.reload('currentTableId', {
+                                page: {
+                                    curr: 1
+                                }
+                                , where: {
+                                    searchParams: result
+                                }
+                            }, 'data');
+                        } else {
+                            layer.alert(result.msg, {
+                                icon: 2
+                            });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.msg('数据提交中,请稍后...', {
+                            icon: 16,
+                            shade: 0.3,
+                            time: 0
+                        });
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            });
+        });
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            //console.log(obj)
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data))
+            } else if (obj.event === 'delete') {
+                layer.confirm('确定删除选中的行吗？', function () {
+                    $.ajax({
+                        url: '/iothub/deleteDevice?ids=' + data.id,
+                        type: 'DELETE',
+                        success: function (result) {
+                            if (result.code == 200) {
+                                layer.alert(result.msg, {
+                                    icon: 1
+                                });
+                                table.reload('currentTableId', {
+                                    page: {
+                                        curr: 1
+                                    }
+                                    , where: {
+                                        searchParams: result
+                                    }
+                                }, 'data');
+                            } else {
+                                layer.alert(result.msg, {
+                                    icon: 2
+                                });
+                            }
+                        },
+                        beforeSend: function () {
+                            layer.msg('数据提交中,请稍后...', {
+                                icon: 16,
+                                shade: 0.3,
+                                time: 0
+                            });
+                        },
+                        complete: function () {
+                            layer.closeAll('loading');
+                        }
+                    });
+                });
+            }
+        });
+
+    });*/
+</script>
+</body>
+</html>
