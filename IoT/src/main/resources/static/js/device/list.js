@@ -1,8 +1,7 @@
-var elem = "currentTableId";
 var searchUrl = "/device/list";
-var addUrl="/page/device/add";
-var editUrl="/page/device/edit";
-var deleteUrl="/device/delete";
+var addUrl = "/page/device/add";
+var editUrl = "/page/device/edit";
+var deleteUrl = "/device/delete";
 var table;
 var col = [
     [
@@ -22,4 +21,11 @@ var col = [
         }
     ]
 ]
-initPage(elem,col,searchUrl,addUrl,editUrl,deleteUrl);
+var option = {
+    "col": col,
+    "searchUrl": searchUrl,
+    "addUrl": addUrl,
+    "editUrl": editUrl,
+    "deleteUrl": deleteUrl
+}
+initPage(option);

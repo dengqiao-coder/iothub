@@ -14,26 +14,27 @@
     <div class="layuimini-main">
         <div style="margin: 10px 10px 10px 10px">
             <form id="form" class="layui-form layui-form-pane" action="">
+                <input id="id" type="hidden" name="id" th:value="${device.getId()}">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">产品编码</label>
                         <div class="layui-input-inline">
                             <input type="text" name="productName" lay-verify="code" lay-verType="tips" autocomplete="off"
-                                   class="layui-input">
+                                   class="layui-input" th:value="${device.getProductName()}">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">终端编码</label>
                         <div class="layui-input-inline">
                             <input type="text" name="deviceName" lay-verify="code" lay-verType="tips" autocomplete="off"
-                                   class="layui-input">
+                                   class="layui-input" th:value="${device.getDeviceName()}">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">密码</label>
                         <div class="layui-input-inline">
                             <input type="text" name="secret" lay-verify="password" lay-verType="tips" autocomplete="off"
-                                   class="layui-input">
+                                   class="layui-input" th:value="${device.getSecret()}">
                         </div>
                     </div>
                 </div>
@@ -48,7 +49,7 @@
 </div>
 <script src="../../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
 <script src="../../js/common.js"></script>
-<script src="../../js/device/add.js"></script>
+<script src="../../js/device/edit.js"></script>
 
 </body>
 </html>

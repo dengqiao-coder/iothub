@@ -1,7 +1,12 @@
 package com.lemon.controller;
 
+import com.lemon.entity.Device;
+import com.lemon.service.DeviceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author dengqiao
@@ -10,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/page/device")
 public class DevicePageController {
+    @Autowired
+    private DeviceService deviceService;
+
     @RequestMapping("/index")
     public String index() {
         return "device/index";
@@ -18,5 +26,13 @@ public class DevicePageController {
     @RequestMapping("/add")
     public String add() {
         return "device/add";
+    }
+
+    @RequestMapping("/edit")
+    public String edit(@RequestParam String id, Model model) {
+        Device device = deviceService.findById(id);
+        model.addAttribute("device", device);
+        model.addAttribute("device1", "123");
+        return "device/edit";
     }
 }

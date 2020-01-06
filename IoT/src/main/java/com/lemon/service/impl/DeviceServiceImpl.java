@@ -6,6 +6,7 @@ import com.lemon.entity.Device;
 import com.lemon.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (devices != null && StrUtil.isNotBlank(devices.getDeviceName())) {
             criteria = deviceDao.queryLike(criteria, "device_name", devices.getDeviceName());
         }
-        return deviceDao.findPage(criteria, pageNo, pageSize);
+        return deviceDao.findPage(criteria, pageNo, pageSize, Sort.Direction.DESC, "update_time");
     }
 
     @Override
@@ -39,13 +40,22 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public List<Device> findByBrokerUsername(String brokerUsername) {
-        return deviceDao.findList("broker_username", brokerUsername);
+    public List<Device> findByBrokerUsername(Device device) {
+        Criteria criteria = Criteria.where("broker_username").is(device.getBrokerUsername());
+        if (StrUtil.isNotBlank(device.getId())) {
+            criteria.and("id").ne(device.getId());
+        }
+        return deviceDao.findList(criteria);
     }
 
     @Override
     public void save(Device devices) {
         devices.preSave();
         deviceDao.save(devices);
+    }
+
+    @Override
+    public Device findById(String id) {
+        return deviceDao.findById(id);
     }
 }

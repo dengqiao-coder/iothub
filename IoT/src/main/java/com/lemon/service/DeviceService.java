@@ -14,7 +14,9 @@ public interface DeviceService {
 
     long deleteById(String id);
 
-    List<Device> findByBrokerUsername(String brokerUsername);
+    List<Device> findByBrokerUsername(Device device);
 
     void save(Device devices);
+
+    Device findById(String id);
 }

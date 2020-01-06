@@ -61,7 +61,24 @@ public class DeviceController {
     public R save(Device device) {
         try {
             device.setBrokerUsername(device.getProductName() + "/" + device.getDeviceName());
-            List<Device> devicesList = deviceService.findByBrokerUsername(device.getBrokerUsername());
+            List<Device> devicesList = deviceService.findByBrokerUsername(device);
+            if (devicesList != null && devicesList.size() > 0) {
+                return R.error(device.getBrokerUsername() + "已经存在");
+            } else {
+                deviceService.save(device);
+                return R.ok();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return R.error();
+    }
+
+    @RequestMapping("/update")
+    public R update(Device device) {
+        try {
+            device.setBrokerUsername(device.getProductName() + "/" + device.getDeviceName());
+            List<Device> devicesList = deviceService.findByBrokerUsername(device);
             if (devicesList != null && devicesList.size() > 0) {
                 return R.error(device.getBrokerUsername() + "已经存在");
             } else {
