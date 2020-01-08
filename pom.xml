@@ -8,8 +8,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>common-utils</module>
-        <module>IoT</module>
+        <module>iothub-server</module>
         <module>common-base</module>
+        <module>device-sdk</module>
+        <module>iothub-server-api</module>
     </modules>
     <name>iothub</name>
     <packaging>pom</packaging>
