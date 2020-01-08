@@ -49,6 +49,16 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public Device findByBrokerUsername(String brokerUsername) {
+        return deviceDao.findOne("broker_username", brokerUsername);
+    }
+
+    @Override
+    public List<Device> findByProductName(String productName) {
+        return deviceDao.findList("product_name", productName);
+    }
+
+    @Override
     public void save(Device devices) {
         devices.preSave();
         deviceDao.save(devices);

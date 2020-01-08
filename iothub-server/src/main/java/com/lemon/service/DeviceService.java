@@ -16,6 +16,10 @@ public interface DeviceService {
 
     List<Device> findByBrokerUsername(Device device);
 
+    List<Device> findByProductName(String productName);
+
+    Device findByBrokerUsername(String brokerUsername);
+
     void save(Device devices);
 
     Device findById(String id);

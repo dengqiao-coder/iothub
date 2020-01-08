@@ -2,6 +2,7 @@ package com.lemon.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lemon.entity.Device;
+import com.lemon.entity.DeviceVo;
 import com.lemon.layui.LayuiTableData;
 import com.lemon.response.R;
 import com.lemon.service.DeviceService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -86,16 +88,42 @@ public class DeviceController {
             device.setDeviceName(deviceName);
             device.setSecret(secret);
             device.setProductName(productName);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("productName", productName);
-            jsonObject.put("deviceName", deviceName);
-            jsonObject.put("secret", secret);
             deviceService.save(device);
-            return R.ok().put("device", jsonObject);
+            DeviceVo deviceVo = new DeviceVo();
+            deviceVo.setDeviceName(deviceName);
+            deviceVo.setProductName(productName);
+            deviceVo.setSecret(secret);
+            return R.ok().put("device", deviceVo);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return R.error();
+    }
+
+    @RequestMapping("/findByBrokerUsername/{productName}/{deviceName}")
+    public DeviceVo findByBrokerUsername(@PathVariable String productName, @PathVariable String deviceName) {
+        Device device = deviceService.findByBrokerUsername(productName + "/" + deviceName);
+        DeviceVo deviceVo = new DeviceVo();
+        deviceVo.setDeviceName(device.getDeviceName());
+        deviceVo.setProductName(device.getProductName());
+        deviceVo.setSecret(device.getSecret());
+        return deviceVo;
+    }
+
+    @RequestMapping("/findByProductName/{productName}")
+    public List<DeviceVo> findByProductName(@PathVariable String productName) {
+        List<Device> devices = deviceService.findByProductName(productName);
+        List<DeviceVo> deviceVos = new ArrayList<>();
+        if (devices != null && devices.size() > 0) {
+            for (Device device : devices) {
+                DeviceVo deviceVo = new DeviceVo();
+                deviceVo.setDeviceName(device.getDeviceName());
+                deviceVo.setProductName(device.getProductName());
+                deviceVo.setSecret(device.getSecret());
+                deviceVos.add(deviceVo);
+            }
+        }
+        return deviceVos;
     }
 
     @RequestMapping("/update")
