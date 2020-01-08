@@ -2,12 +2,14 @@ package com.lemon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-public class IoTApplication {
+@EnableDiscoveryClient
+public class IothubServerApplication {
 
 	public static void main(String[] args) {
-        SpringApplication.run(IoTApplication.class, args);
+        SpringApplication.run(IothubServerApplication.class, args);
 	}
 
 }

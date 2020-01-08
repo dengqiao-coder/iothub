@@ -32,7 +32,6 @@ public class DevicePageController {
     public String edit(@RequestParam String id, Model model) {
         Device device = deviceService.findById(id);
         model.addAttribute("device", device);
-        model.addAttribute("device1", "123");
         return "device/edit";
     }
 }

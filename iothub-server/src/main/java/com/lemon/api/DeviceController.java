@@ -1,9 +1,11 @@
 package com.lemon.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lemon.entity.Device;
 import com.lemon.layui.LayuiTableData;
 import com.lemon.response.R;
 import com.lemon.service.DeviceService;
+import com.lemon.util.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,6 +70,28 @@ public class DeviceController {
                 deviceService.save(device);
                 return R.ok();
             }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return R.error();
+    }
+
+    @RequestMapping("/register/{productName}")
+    public R register(@PathVariable String productName) {
+        try {
+            Device device = new Device();
+            String deviceName = IdWorker.getIdByUuid();
+            String secret = IdWorker.getRandomSeq();
+            device.setBrokerUsername(productName + "/" + deviceName);
+            device.setDeviceName(deviceName);
+            device.setSecret(secret);
+            device.setProductName(productName);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("productName", productName);
+            jsonObject.put("deviceName", deviceName);
+            jsonObject.put("secret", secret);
+            deviceService.save(device);
+            return R.ok().put("device", jsonObject);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
