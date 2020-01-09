@@ -1,10 +1,9 @@
 package com.lemon.iothubserverapi.controller;
 
-import com.lemon.entity.DeviceVo;
+import com.lemon.iothubserver.entity.DeviceVo;
 import com.lemon.iothubserverapi.service.IothubServerService;
-import com.lemon.response.R;
+import com.lemon.commonbase.response.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

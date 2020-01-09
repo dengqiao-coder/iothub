@@ -1,9 +1,8 @@
 package com.lemon.iothubserverapi.service;
 
-import com.lemon.entity.DeviceVo;
-import com.lemon.response.R;
+import com.lemon.iothubserver.entity.DeviceVo;
+import com.lemon.commonbase.response.R;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

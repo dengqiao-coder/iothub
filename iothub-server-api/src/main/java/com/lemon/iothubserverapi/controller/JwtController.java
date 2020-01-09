@@ -3,7 +3,7 @@ package com.lemon.iothubserverapi.controller;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.lemon.iothubserverapi.entity.Token;
-import com.lemon.util.IdWorker;
+import com.lemon.commonutils.util.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
