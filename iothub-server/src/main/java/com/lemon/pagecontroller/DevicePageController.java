@@ -1,4 +1,4 @@
-package com.lemon.controller;
+package com.lemon.pagecontroller;
 
 import com.lemon.entity.Device;
 import com.lemon.service.DeviceService;

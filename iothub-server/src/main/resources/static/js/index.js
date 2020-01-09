@@ -8,7 +8,7 @@ layui.config({
         element = layui.element,
         layer = layui.layer;
 
-    layuimini.init('api/init.json');
+    layuimini.init('controller/init.json');
 
     $('.login-out').on("click", function () {
         layer.msg('退出登录成功', function () {

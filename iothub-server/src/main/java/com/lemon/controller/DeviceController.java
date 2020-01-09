@@ -1,6 +1,5 @@
-package com.lemon.api;
+package com.lemon.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lemon.entity.Device;
 import com.lemon.entity.DeviceVo;
 import com.lemon.layui.LayuiTableData;
@@ -78,8 +77,8 @@ public class DeviceController {
         return R.error();
     }
 
-    @RequestMapping("/register/{productName}")
-    public R register(@PathVariable String productName) {
+    @RequestMapping("/register")
+    public R register(@RequestParam String productName) {
         try {
             Device device = new Device();
             String deviceName = IdWorker.getIdByUuid();
@@ -100,8 +99,8 @@ public class DeviceController {
         return R.error();
     }
 
-    @RequestMapping("/findByBrokerUsername/{productName}/{deviceName}")
-    public DeviceVo findByBrokerUsername(@PathVariable String productName, @PathVariable String deviceName) {
+    @RequestMapping("/findByBrokerUsername")
+    public DeviceVo findByBrokerUsername(@RequestParam String productName, @RequestParam String deviceName) {
         Device device = deviceService.findByBrokerUsername(productName + "/" + deviceName);
         DeviceVo deviceVo = new DeviceVo();
         deviceVo.setDeviceName(device.getDeviceName());
@@ -110,8 +109,8 @@ public class DeviceController {
         return deviceVo;
     }
 
-    @RequestMapping("/findByProductName/{productName}")
-    public List<DeviceVo> findByProductName(@PathVariable String productName) {
+    @RequestMapping("/findByProductName")
+    public List<DeviceVo> findByProductName(@RequestParam String productName) {
         List<Device> devices = deviceService.findByProductName(productName);
         List<DeviceVo> deviceVos = new ArrayList<>();
         if (devices != null && devices.size() > 0) {

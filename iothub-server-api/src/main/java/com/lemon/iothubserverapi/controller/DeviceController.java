@@ -6,6 +6,7 @@ import com.lemon.response.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,18 +21,18 @@ public class DeviceController {
     @Autowired
     private IothubServerService iothubServerService;
 
-    @RequestMapping("/register/{productName}")
-    public R register(@PathVariable String productName) {
+    @RequestMapping("/register")
+    public R register(@RequestParam String productName) {
         return iothubServerService.register(productName);
     }
 
-    @RequestMapping("/queryByProductName/{productName}")
-    public List<DeviceVo> queryByProductName(@PathVariable String productName) {
+    @RequestMapping("/queryByProductName")
+    public List<DeviceVo> queryByProductName(@RequestParam String productName) {
         return iothubServerService.findByProductName(productName);
     }
 
-    @RequestMapping("/queryByBrokerUsername/{productName}/{deviceName}")
-    public DeviceVo queryByBrokerUsername(@PathVariable String productName, @PathVariable String deviceName) {
+    @RequestMapping("/queryByBrokerUsername")
+    public DeviceVo queryByBrokerUsername(@RequestParam String productName, @RequestParam String deviceName) {
         return iothubServerService.findByBrokerUsername(productName, deviceName);
     }
 

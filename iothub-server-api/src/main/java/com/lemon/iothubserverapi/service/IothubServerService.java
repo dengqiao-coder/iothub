@@ -5,6 +5,7 @@ import com.lemon.response.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,12 +15,12 @@ import java.util.List;
  */
 @FeignClient(name = "iothub-server")
 public interface IothubServerService {
-    @RequestMapping("/device/register/{productName}")
-    R register(@PathVariable("productName") String productName);
+    @RequestMapping("/device/register")
+    R register(@RequestParam("productName") String productName);
 
-    @RequestMapping("/device/findByBrokerUsername/{productName}/{deviceName}")
-    DeviceVo findByBrokerUsername(@PathVariable("productName") String productName, @PathVariable("deviceName") String deviceName);
+    @RequestMapping("/device/findByBrokerUsername")
+    DeviceVo findByBrokerUsername(@RequestParam("productName") String productName, @RequestParam("deviceName") String deviceName);
 
-    @RequestMapping("/device/findByProductName/{productName}")
-    List<DeviceVo> findByProductName(@PathVariable("productName") String productName);
+    @RequestMapping("/device/findByProductName")
+    List<DeviceVo> findByProductName(@RequestParam("productName") String productName);
 }

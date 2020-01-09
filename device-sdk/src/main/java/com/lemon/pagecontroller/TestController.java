@@ -1,4 +1,4 @@
-package com.lemon.controller;
+package com.lemon.pagecontroller;
 
 import com.lemon.mqtt.MqttGateWay;
 import org.springframework.beans.factory.annotation.Autowired;
